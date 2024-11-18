@@ -4,11 +4,11 @@
 	Plugin URI: http://www.stockdio.com/wordpress
 	Description: A WordPress plugin for displaying historical stock market live charts and technical indicators.
 	Author: Stockdio
-	Version: 2.8.17
+	Version: 2.8.18
 	Author URI: http://www.stockdio.com
 */
 //set up the admin area options page
-define('stockdio_chart_version','2.8.17');
+define('stockdio_chart_version','2.8.18');
 define( 'stockdio_historical_chart__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 class StockdioSettingsPage
 {

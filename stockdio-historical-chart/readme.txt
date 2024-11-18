@@ -3,8 +3,8 @@ Contributors: stockdio
 Tags: stocks, ticker, graph, finance, chart, stock, financial, index, indices, currencies, commodities, forex, market, exchange
 License: See www.stockdio.com/wordpress for details.
 Requires at least: 3.1
-Tested up to: 6.6
-Stable tag: 2.8.17
+Tested up to: 6.7
+Stable tag: 2.8.18
 WordPress plugin and widget for displaying stock market live charts and technical indicators.
 
 == Description ==
@@ -189,6 +189,11 @@ Yes. You must use BONDS as the stockExchange and then specify the future in the 
 22. Stock Prices Chart block sidebar settings.
 
 == Changelog ==
+= 2.8.18 =
+Release date: November 18, 2024
+
+* Compatibility with WordPress 6.7
+
 = 2.8.17 =
 Release date: July 18, 2024
 
