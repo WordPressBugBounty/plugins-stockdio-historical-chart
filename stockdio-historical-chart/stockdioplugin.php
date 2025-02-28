@@ -4,11 +4,11 @@
 	Plugin URI: http://www.stockdio.com/wordpress
 	Description: A WordPress plugin for displaying historical stock market live charts and technical indicators.
 	Author: Stockdio
-	Version: 2.8.18
+	Version: 2.8.19
 	Author URI: http://www.stockdio.com
 */
 //set up the admin area options page
-define('stockdio_chart_version','2.8.18');
+define('stockdio_chart_version','2.8.20');
 define( 'stockdio_historical_chart__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 class StockdioSettingsPage
 {
@@ -873,6 +873,23 @@ function enqueueChartHistoricalAssets()
 	wp_enqueue_script('customChartHistoricalStockdioJs');
 }
 
+function chart_sanitize_array($info){
+	try {
+		foreach ($info as $key => $value) {
+			$info[$key] = esc_attr(sanitize_text_field($value));
+		}
+		$string_version = implode(',', $info);
+		return "<div>NO ERROR: ".$string_version."</div>";
+	} catch (Exception $e){
+		return "<div>ERROR 123"."". "' );</div>";
+	} finally{
+
+	}
+	$string_version = implode(',', $info);
+	return "<div>NO ERROR2: ".$string_version."</div>";
+	
+}
+
 //Execute the shortcode with $atts arguments
 function stockdio_historical_chart_func( $atts ) {
 	//make array of arguments and give these arguments to the shortcode
@@ -919,11 +936,14 @@ function stockdio_historical_chart_func( $atts ) {
 		
     ), $atts );
 
+	    //return chart_sanitize_array($a);
+
+		foreach ($a as $key => $value) {
+			$a[$key] = esc_attr(sanitize_text_field($value));
+		}
+
 	    //create variables from arguments array
 		extract($a);
-
-		$width = esc_attr(sanitize_text_field($width));
-		$height = esc_attr(sanitize_text_field($height));
 
 	if (!empty($exchange) && empty($stockexchange)){
 		$stockexchange = $exchange;
@@ -1152,7 +1172,19 @@ function stockdio_historical_chart_func( $atts ) {
 	$src = 'src';
 	if ($loaddatawhenvisible == "1" || $loaddatawhenvisible == "true") 
 		$src = 'iframesrc';
-	$output = '<iframe referrerpolicy="no-referrer-when-downgrade" frameBorder="0" scrolling="no" width="'.$width.'" height="'.$height.'" '.$src.'="https://api.stockdio.com/visualization/financial/charts/v1/'.$page.'?app-key='.$api_key.'&wp=1&showUserMenu=false'.$extraSettings.'"></iframe>';  	
+
+	$srcurl = 'https://api.stockdio.com/visualization/financial/charts/v1/'.$page.'?app-key='.$api_key.'&wp=1&showUserMenu=false'.$extraSettings;
+
+    //Escaping the src url before output: 
+	$srcurl = esc_url($srcurl);
+
+	$width = esc_attr($width);
+	$height = esc_attr($height);
+
+	//src is hardcoded inside the code, so is not need to escape, but we do it just in case:
+	$src = esc_attr($src);
+
+	$output = '<iframe referrerpolicy="no-referrer-when-downgrade" frameBorder="0" scrolling="no" width="'.$width.'" height="'.$height.'" '.$src.'="'.$srcurl.'"></iframe>';  	
 
   	//return completed string
   	return $output;
